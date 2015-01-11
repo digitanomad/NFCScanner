@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.digitanomad.nfcscanner"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="19" />
+    
+    <!-- NFC 애플리케이션을 만들 때는 사용권한을 매니페스트에 등록해야 함. -->
+    <uses-feature android:name="android.hardware.nfc" android:required="true"/>
+    <uses-permission android:name="android.permission.NFC"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <!-- launchMode의 속성 값을 singleInstance로 해두면 객체를 한번만 생성하게 된다. -->
+        <activity
+            android:name="com.digitanomad.nfcscanner.NFCScanner"
+            android:label="@string/app_name" 
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            
+            <!-- NDEF_DISCOVERED 액션으로 등록된 인텐트를 전달받기 위해 액티비티를 등록  -->
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
